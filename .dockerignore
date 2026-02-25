@@ -1,0 +1,42 @@
+# Git
+.git/
+.gitignore
+
+# Virtual environments (never copy into image)
+.venv/
+venv/
+env/
+
+# Secrets and env (use build args or runtime env instead)
+.env
+.env.*
+!.env.example
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Tests (omit if you run tests in CI only; include if you run them in Docker)
+# tests/
+
+# Documentation and dev files
+*.md
+!README.md
+
+# Docker files (not needed inside the image)
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+
+# Logs and local DB files
+*.log
+*.sqlite
+*.db
