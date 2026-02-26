@@ -1,10 +1,16 @@
 from fastapi import FastAPI
 from app.routes import router
 import uvicorn
+from contextlib import asynccontextmanager
 
-app = FastAPI()
 
-app.include_router(router)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    yield
+
+app = FastAPI(lifespan=lifespan)
+
+app.include_router(router, prefix='/api')
 
 @app.get('/health')
 async def health_check():
