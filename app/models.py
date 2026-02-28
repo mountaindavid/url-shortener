@@ -4,8 +4,16 @@ from app.database import Base
 
 
 class ShortUrl(Base):
-    __tablename__ = 'short_urls'
+    __tablename__ = "short_urls"
     id = Column(Integer, primary_key=True)
     short_code = Column(String, unique=True, index=True)
     original_url = Column(String, index=True)
+    created_at = Column(DateTime, default=datetime.now)
+
+
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True)
+    username = Column(String, unique=True, index=True)
+    password_hash = Column(String)
     created_at = Column(DateTime, default=datetime.now)
