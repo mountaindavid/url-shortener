@@ -3,7 +3,6 @@ import string
 
 from sqlalchemy.orm import Session
 from app.models import ShortUrl
-from fastapi import HTTPException
 
 def generate_short_code(length: int = 5) -> str:
     """Generate a random short code (letters + digits)."""
