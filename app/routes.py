@@ -3,7 +3,7 @@ from fastapi.responses import RedirectResponse
 
 from app.dependencies import db_dependency, form_dependency, user_dependency
 from app.schemas import ShortUrlCreate, ShortUrlResponse, UserResponse, UserCreate, TokenResponse
-from app.shortcode import get_or_create_short_code, get_original_url, get_all_urls
+from app.shortcode import get_or_create_short_code, get_original_url, get_all_urls, delete_all_short_urls
 from app.auth import create_user, create_access_token, authenticate_user
 from app.config import Settings
 
@@ -24,6 +24,11 @@ def shorten_url(body: ShortUrlCreate, db: db_dependency, current_user: user_depe
 @router.get("/get-all")
 def list_all_urls(db: db_dependency, current_user: user_dependency):
     return get_all_urls(db)
+
+
+@router.delete("/delete-all")
+def delete_all_urls(db: db_dependency, current_user: user_dependency):
+    return delete_all_short_urls(db)
 
 
 @router.get("/{short_code}")

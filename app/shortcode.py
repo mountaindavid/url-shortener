@@ -34,3 +34,7 @@ def get_original_url(short_code: str, db: Session) -> str:
 
 def get_all_urls(db: Session) -> list[ShortUrl]:
     return db.query(ShortUrl).all()
+
+def delete_all_short_urls(db: Session):
+    db.query(ShortUrl).delete()
+    db.commit()
