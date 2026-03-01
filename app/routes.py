@@ -1,12 +1,11 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException
 from fastapi.responses import RedirectResponse
-from app.database import db_dependency
-from app.auth import form_dependency
+
+from app.dependencies import db_dependency, form_dependency, user_dependency
 from app.schemas import ShortUrlCreate, ShortUrlResponse, UserResponse, UserCreate, TokenResponse
 from app.shortcode import get_or_create_short_code, get_original_url, get_all_urls
+from app.auth import create_user, create_access_token, authenticate_user
 from app.config import Settings
-from app.auth import create_user, create_access_token, authenticate_user, user_dependency
-from app.models import User
 
 router = APIRouter()
 BASE_URL = Settings().base_url
@@ -35,9 +34,10 @@ def redirect_to_original_url(short_code: str, db: db_dependency) -> str:
     return original_url #temporary
 
 
-@router.post("/auth/register")
+@router.post("/auth/register", status_code=201)
 def register_user(user: UserCreate, db: db_dependency) -> UserResponse:
     return create_user(user, db)
+
 
 @router.post("/auth/token")
 def get_token(form: form_dependency, db: db_dependency) -> TokenResponse:
